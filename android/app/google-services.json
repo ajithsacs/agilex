@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "1081031436445",
+    "project_id": "sample-39ef7",
+    "storage_bucket": "sample-39ef7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081031436445:android:6729862b3ee92451698c74",
+        "android_client_info": {
+          "package_name": "com.example.agilex"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081031436445-aiknjkgiglv0h119t299m7c9pk02u724.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc7ZJf4MSqvhA3zgfJTUJTcj-lSE6QdME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081031436445-aiknjkgiglv0h119t299m7c9pk02u724.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1081031436445-3ih9fuphhq79un4e8o7en7phmf9etrsj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.agilexApp"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1081031436445:android:65117891fa4a76c8698c74",
+        "android_client_info": {
+          "package_name": "com.example.agilex_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1081031436445-aiknjkgiglv0h119t299m7c9pk02u724.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCc7ZJf4MSqvhA3zgfJTUJTcj-lSE6QdME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1081031436445-aiknjkgiglv0h119t299m7c9pk02u724.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1081031436445-3ih9fuphhq79un4e8o7en7phmf9etrsj.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.agilexApp"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
