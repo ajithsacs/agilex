@@ -50,11 +50,20 @@ class _RegistorState extends State<Registor> {
             Firebase.initializeApp(
                 options: DefaultFirebaseOptions.currentPlatform);
             final username = _email.text; //this will convert the _email to text
-            final password = _password.text; //this will convert _password to text
+            final password =
+                _password.text; //this will convert _password to text
             try {
               final auth = FirebaseAuth.instance;
-              final user = await auth.createUserWithEmailAndPassword(email: username, password: password);
+              final user = await auth.createUserWithEmailAndPassword(
+                  email: username, password: password);
             } on FirebaseAuthException catch (e) {
+              if (e.code == "email-already-in-use") {
+                print("Email Already Exist");
+              } else if (e.code == "weak-password") {
+                print("Try Some good Password");
+              } else {
+                print("Something Went Wrong");
+              }
               print(e.code);
             }
           },
