@@ -1,18 +1,18 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
 
+import 'package:flutter/material.dart';
 import '../firebase_options.dart';
 
-class Registor extends StatefulWidget {
-  const Registor({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  State<Registor> createState() => _RegistorState();
+  State<Register> createState() => _RegisterState();
 }
 
 //this the base class that handle state
-class _RegistorState extends State<Registor> {
+class _RegisterState extends State<Register> {
   late final TextEditingController _email;
 
   late final TextEditingController _password;
@@ -70,7 +70,8 @@ class _RegistorState extends State<Registor> {
           child: const Text("Registor")),
       TextButton(
           onPressed: () {
-            return;
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil('/login', (route) => false);
           },
           child: const Text("Go to Login"))
     ]);
@@ -79,21 +80,8 @@ class _RegistorState extends State<Registor> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("Registor")),
-      body: FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
-        builder: (context, snapshot) {
-          switch (snapshot.connectionState) {
-            case ConnectionState.done:
-              return _createAccountEmailPassword();
-            default:
-              return const Scaffold(body: Center(child: Text("Looding...")));
-          }
-        },
-      ),
-    );
+        appBar: AppBar(title: Text("Register")),
+        body: _createAccountEmailPassword());
   }
-}
 //this will create our Registration page with one button and 2 text box
+}
