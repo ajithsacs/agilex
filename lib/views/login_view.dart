@@ -1,3 +1,6 @@
+import 'package:agilex/constants/response.dart';
+import 'package:agilex/constants/routes.dart';
+import 'package:agilex/fuctional/popup.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -11,21 +14,22 @@ firebaseLogin(email, passwords, context) async {
 
   try {
     final auth = FirebaseAuth.instance;
-    final user = await auth.signInWithEmailAndPassword(
+    await auth.signInWithEmailAndPassword(
         email: username, password: password);
-    print(user);
-    Navigator.of(context).pushNamedAndRemoveUntil("/Notes", (route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil(notesAppRoute, (route) => false);
   } on FirebaseAuthException catch (e) {
-    print(e.code);
-    if (e.code == 'user-not-found') {
-      print("plz registor");
-    } else if (e.code == "wrong-password") {
-      print("Wrong password");
-    } else if (e.code == "network-request-failed") {
-      print("network error");
+    if (e.code == usernotfound) {
+      showErrordialog(context, "Email not found");
+    } else if (e.code == wrongpassword) {
+      showErrordialog(context, "Invalid Cerdntials try again");
+    } else if (e.code == networkerror) {
+      showErrordialog(context, "Network Error");
     } else {
-      print(e.code);
+      showErrordialog(context, "Error ${e.code}");
     }
+  } catch (e) {
+    showErrordialog(context, "some thing went wrong ${e.toString()}");
   }
 }
 
@@ -80,9 +84,9 @@ class _LoginState extends State<Login> {
 
   @override
   Widget build(BuildContext context) {
-    var routes = "/register";
+    var routes = registerRoute;
     return Scaffold(
-        appBar: AppBar(title: Text("Login")),
+        appBar: AppBar(title: const Text("Login")),
         body: _loginDesign(_email, _password, context, routes));
   }
 }

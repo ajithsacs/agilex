@@ -17,10 +17,9 @@ Column emailVerifyDesign() {
       TextButton(
           onPressed: () async {
             final user = FirebaseAuth.instance.currentUser;
-            var email = await FirebaseAuth.instance.currentUser
-                ?.sendEmailVerification();
+            await user?.sendEmailVerification();
           },
-          child: Text("Send Email"))
+          child:const Text("Send Email"))
     ],
   );
 }

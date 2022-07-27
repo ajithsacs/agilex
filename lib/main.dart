@@ -1,3 +1,4 @@
+import 'package:agilex/constants/routes.dart';
 import 'package:agilex/views/login_view.dart';
 import 'package:agilex/views/register.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,9 +17,10 @@ void main() async {
     ),
     home: const HomePage(),
     routes: {
-      "/login": (context) => const Login(),
-      "/register": (context) => const Register(),
-      "/Notes": (context) => const NotesApp(),
+      loginRoute: (context) => const Login(),
+      registerRoute: (context) => const Register(),
+      notesAppRoute: (context) => const NotesApp(),
+      emailVerifyRout: (context) => const EmailVerify(),
     },
   ));
 }

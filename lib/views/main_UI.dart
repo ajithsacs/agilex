@@ -1,5 +1,6 @@
+import 'package:agilex/constants/routes.dart';
 import 'package:flutter/material.dart';
-import 'dart:developer' as dev show log;
+// import 'dart:developer' as dev show log;
 
 enum MenuAction { logout, settings }
 
@@ -14,10 +15,12 @@ PopupMenuButton dropDown(context) {
   return PopupMenuButton<MenuAction>(onSelected: (value) async {
     switch (value) {
       case MenuAction.logout:
-        final logout = await showLogoutDialog(context);
+        final logout = await showLogoutDialog(
+          context,
+        );
         if (logout) {
           Navigator.of(context)
-              .pushNamedAndRemoveUntil("/login", (route) => false);
+              .pushNamedAndRemoveUntil(loginRoute, (route) => false);
         }
 
         break;
@@ -56,8 +59,8 @@ Future<bool> showLogoutDialog(context) {
           title: const Text("Alert Logout "),
           content: const Text("Are you sure to logout !"),
           actions: [
-            dialogbutton("ok", context, true),
-            dialogbutton("cancel", context, true)
+            dialogbutton("Ok", context, true),
+            dialogbutton("Cancel", context, true)
           ],
         );
       }).then((value) => value ?? false);
