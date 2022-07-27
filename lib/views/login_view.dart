@@ -14,10 +14,14 @@ firebaseLogin(email, passwords, context) async {
 
   try {
     final auth = FirebaseAuth.instance;
-    await auth.signInWithEmailAndPassword(
-        email: username, password: password);
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil(notesAppRoute, (route) => false);
+    await auth.signInWithEmailAndPassword(email: username, password: password);
+    final user = FirebaseAuth.instance.currentUser;
+    if (user?.emailVerified ?? false) {
+      Navigator.of(context)
+          .pushNamedAndRemoveUntil(notesAppRoute, (route) => false);
+    } else {
+      Navigator.popAndPushNamed(context, emailVerifyRout);
+    }
   } on FirebaseAuthException catch (e) {
     if (e.code == usernotfound) {
       showErrordialog(context, "Email not found");

@@ -1,3 +1,4 @@
+import 'package:agilex/constants/routes.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -8,18 +9,26 @@ class EmailVerify extends StatefulWidget {
   State<EmailVerify> createState() => _EmailVerifyState();
 }
 
-Column emailVerifyDesign() {
+Column emailVerifyDesign(context) {
   return Column(
     children: [
       const Center(
-        child: Text("Send code to Email "),
+        child: Text("We Have Send code to Email "),
       ),
+      const Text("if not Send code to Email"),
       TextButton(
           onPressed: () async {
             final user = FirebaseAuth.instance.currentUser;
             await user?.sendEmailVerification();
           },
-          child:const Text("Send Email"))
+          child: const Text("Send Email")),
+      TextButton(
+          onPressed: () async {
+            await FirebaseAuth.instance.signOut();
+            Navigator.of(context)
+                .pushNamedAndRemoveUntil(registerRoute, (route) => false);
+          },
+          child: const Text("Restart")),
     ],
   );
 }
@@ -31,7 +40,7 @@ class _EmailVerifyState extends State<EmailVerify> {
       appBar: AppBar(
         title: const Text("Email Verify"),
       ),
-      body: emailVerifyDesign(),
+      body: emailVerifyDesign(context),
     );
   }
 }

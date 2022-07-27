@@ -3,6 +3,7 @@
 import 'package:agilex/constants/response.dart';
 import 'package:agilex/constants/routes.dart';
 import 'package:agilex/fuctional/popup.dart';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -46,9 +47,8 @@ class _RegisterState extends State<Register> {
         email: username,
         password: password,
       );
-      Navigator.of(
-        context,
-      ).pushNamed(emailVerifyRout);
+      FirebaseAuth.instance.currentUser?.sendEmailVerification();
+      Navigator.pushNamed(context, emailVerifyRout);
     } on FirebaseAuthException catch (e) {
       if (e.code == emailAlreadyInUse) {
         showErrordialog(context, "Email in use try new");
