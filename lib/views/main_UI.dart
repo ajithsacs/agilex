@@ -1,4 +1,5 @@
 import 'package:agilex/constants/routes.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 // import 'dart:developer' as dev show log;
 
@@ -19,6 +20,7 @@ PopupMenuButton dropDown(context) {
           context,
         );
         if (logout) {
+          await FirebaseAuth.instance.signOut(); // this logout user from the app and firebase
           Navigator.of(context)
               .pushNamedAndRemoveUntil(loginRoute, (route) => false);
         }
