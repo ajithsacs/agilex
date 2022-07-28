@@ -20,7 +20,8 @@ PopupMenuButton dropDown(context) {
           context,
         );
         if (logout) {
-          await FirebaseAuth.instance.signOut(); // this logout user from the app and firebase
+          await FirebaseAuth.instance
+              .signOut(); // this logout user from the app and firebase
           Navigator.of(context)
               .pushNamedAndRemoveUntil(loginRoute, (route) => false);
         }
@@ -62,7 +63,7 @@ Future<bool> showLogoutDialog(context) {
           content: const Text("Are you sure to logout !"),
           actions: [
             dialogbutton("Ok", context, true),
-            dialogbutton("Cancel", context, true)
+            dialogbutton("Cancel", context, false)
           ],
         );
       }).then((value) => value ?? false);

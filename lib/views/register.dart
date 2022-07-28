@@ -2,7 +2,7 @@
 
 import 'package:agilex/constants/response.dart';
 import 'package:agilex/constants/routes.dart';
-import 'package:agilex/fuctional/popup.dart';
+import 'package:agilex/fuctional/errordialog.dart';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
