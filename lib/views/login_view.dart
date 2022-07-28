@@ -1,40 +1,50 @@
-import 'package:agilex/constants/response.dart';
 import 'package:agilex/constants/routes.dart';
 import 'package:agilex/fuctional/errordialog.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:agilex/services/auth/auth_services.dart';
+import 'package:agilex/services/auth/authexception.dart';
 import 'package:flutter/material.dart';
-import '../firebase_options.dart';
 
 // this is firebase logic
 firebaseLogin(email, passwords, context) async {
-  Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  AuthServices.firebase().init();
   final username = email.text;
   final password = passwords.text;
 
   try {
-    final auth = FirebaseAuth.instance;
-    await auth.signInWithEmailAndPassword(email: username, password: password);
-    final user = FirebaseAuth.instance.currentUser;
-    if (user?.emailVerified ?? false) {
+    final auth = AuthServices.firebase();
+    final user = await auth.login(email: username, password: password);
+    //final user = AuthServices.firebase().currentUser;
+    if (user.isEmailverifyed) {
       Navigator.of(context)
           .pushNamedAndRemoveUntil(notesAppRoute, (route) => false);
     } else {
       Navigator.popAndPushNamed(context, emailVerifyRout);
     }
-  } on FirebaseAuthException catch (e) {
-    if (e.code == usernotfound) {
-      showErrordialog(context, "Email not found");
-    } else if (e.code == wrongpassword) {
-      showErrordialog(context, "Invalid Cerdntials try again");
-    } else if (e.code == networkerror) {
-      showErrordialog(context, "Network Error");
-    } else {
-      showErrordialog(context, "Error ${e.code}");
-    }
-  } catch (e) {
-    showErrordialog(context, "some thing went wrong ${e.toString()}");
+  } on EmailnotFound {
+    showErrordialog(context, "Email not found");
+  } on InvalidPassword {
+    showErrordialog(context, "Invalid Cerdntials try again");
+  } on NetworkNotFoundException {
+    showErrordialog(context, "Network Error");
+  } on WeekpasswordAuthException {
+    showErrordialog(context, "week password Error");
+  } on GenericAuthException {
+    showErrordialog(context, "Authentication error");
   }
+  //* firebase coe was repleaced and we used servics folder to do that */
+  // } on FirebaseAuthException  catch (e) {
+  //   if (e.code == usernotfound) {
+  //     showErrordialog(context, "Email not found");
+  //   } else if (e.code == wrongpassword) {
+  //     showErrordialog(context, "Invalid Cerdntials try again");
+  //   } else if (e.code == networkerror) {
+  //     showErrordialog(context, "Network Error");
+  //   } else {
+  //     showErrordialog(context, "Error ${e.code}");
+  //   }
+  // } catch (e) {
+  //   showErrordialog(context, "some thing went wrong ${e.toString()}");
+  // }
 }
 
 //design of login

@@ -1,10 +1,8 @@
 import 'package:agilex/constants/routes.dart';
+import 'package:agilex/services/auth/auth_services.dart';
 import 'package:agilex/views/login_view.dart';
 import 'package:agilex/views/register.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'firebase_options.dart';
 import 'views/Main_ui.dart';
 import 'views/verify_email.dart';
 
@@ -33,15 +31,13 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: Firebase.initializeApp(
-          options: DefaultFirebaseOptions.currentPlatform,
-        ),
+        future: AuthServices.firebase().init(),
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.done:
-              final user = FirebaseAuth.instance.currentUser;
+              final user = AuthServices.firebase().currentUser;
               if (user != null) {
-                if (user.emailVerified) {
+                if (user.isEmailverifyed) {
                   return const NotesApp();
                 } else {
                   return const EmailVerify();

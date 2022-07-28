@@ -2,8 +2,10 @@ import 'package:agilex/services/auth/authexception.dart';
 import 'package:agilex/services/auth/authprovider.dart';
 import 'package:agilex/services/auth/user_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 
 import '../../constants/response.dart';
+import '../../firebase_options.dart';
 
 class FirebaseAuthProvider implements AuthProvider {
   @override
@@ -51,45 +53,33 @@ class FirebaseAuthProvider implements AuthProvider {
         email: email,
         password: password,
       );
-      final user= currentUser;
-      if(user!=null)
-      {
+      final user = currentUser;
+      if (user != null) {
         return user;
-      }
-      else{
+      } else {
         throw UserNotLogined();
       }
-
-    } on FirebaseAuthException catch(e)
-    {
+    } on FirebaseAuthException catch (e) {
       if (e.code == usernotfound) {
         throw EmailnotFound();
-   
-    } else if (e.code == wrongpassword) {
-      throw WeekpasswordAuthException();
-     
-    } else if (e.code == networkerror) {
-      throw NetworkNotFoundException();
-     
-    } else {
-      throw GenericAuthException();
-    }
-      
-    } 
-
-    catch (e) {
+      } else if (e.code == wrongpassword) {
+        throw WeekpasswordAuthException();
+      } else if (e.code == networkerror) {
+        throw NetworkNotFoundException();
+      } else {
+        throw GenericAuthException();
+      }
+    } catch (e) {
       throw GenericAuthException();
     }
   }
 
   @override
-  Future<void> logout() async{
-    final user=currentUser;
-    if(user!=null)
-    {
+  Future<void> logout() async {
+    final user = currentUser;
+    if (user != null) {
       await FirebaseAuth.instance.signOut();
-    }
-    else{
+    } else {
       throw UserNotLogined();
     }
   }
@@ -102,5 +92,12 @@ class FirebaseAuthProvider implements AuthProvider {
     } else {
       throw UserNotLogined();
     }
+  }
+
+  @override
+  Future<void> init() async {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
   }
 }

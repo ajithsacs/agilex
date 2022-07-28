@@ -1,13 +1,10 @@
-// ignore_for_file: use_build_context_synchronously
 
-import 'package:agilex/constants/response.dart';
 import 'package:agilex/constants/routes.dart';
 import 'package:agilex/fuctional/errordialog.dart';
-
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
+import 'package:agilex/services/auth/auth_services.dart';
+import 'package:agilex/services/auth/authexception.dart';
 import 'package:flutter/material.dart';
-import '../firebase_options.dart';
+
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -36,31 +33,41 @@ class _RegisterState extends State<Register> {
   }
 
 //create acccount and exception error
-  firebaseAccountCreate(username, password) async {
-    Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
+  firebaseAccountCreate(username, password) async{
+    AuthServices.firebase().init();
     //this will convert _password to text
     try {
-      final auth = FirebaseAuth.instance;
-      await auth.createUserWithEmailAndPassword(
+      final auth = AuthServices.firebase();
+      await auth.createUser(
         email: username,
         password: password,
       );
-      FirebaseAuth.instance.currentUser?.sendEmailVerification();
+      AuthServices.firebase().sendEmailverification();
+      //FirebaseAuth.instance.currentUser?.sendEmailVerification();
+      //  Navigator.of(context).pushNamed(emailVerifyRout);
       Navigator.pushNamed(context, emailVerifyRout);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == emailAlreadyInUse) {
-        showErrordialog(context, "Email in use try new");
-      } else if (e.code == weekpassword) {
-        showErrordialog(context, "You Password is week");
-      } else {
-        showErrordialog(context, "Somthing went Wrong ${e.code}");
-      }
-    } catch (e) {
-      showErrordialog(context, "Error:${e.toString()}");
+    } on EmailAlreadyInUse {
+      showErrordialog(context, "Email in use try new");
+    } on WeekpasswordAuthException {
+      showErrordialog(context, "You Password is week");
+    } on GenericAuthException {
+      showErrordialog(context, "Somthing went Wrong ");
     }
   }
+
+  /* this is the old code for firebase account create exception handeling */
+
+  //   on FirebaseAuthException catch (e) {
+  //     if (e.code == emailAlreadyInUse) {
+  //       showErrordialog(context, "Email in use try new");
+  //     } else if (e.code == weekpassword) {
+  //       showErrordialog(context, "You Password is week");
+  //     } else {
+  //       showErrordialog(context, "Somthing went Wrong ${e.code}");
+  //     }
+  //   } catch (e) {
+  //     showErrordialog(context, "Error:${e.toString()}");
+  //   }
 
 //this route to register page
   registerRout() {
