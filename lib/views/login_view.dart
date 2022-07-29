@@ -20,7 +20,7 @@ firebaseLogin(email, passwords, context) async {
     } else {
       Navigator.popAndPushNamed(context, emailVerifyRout);
     }
-  } on EmailnotFound {
+  } on EmailnotFoundException {
     showErrordialog(context, "Email not found");
   } on InvalidPassword {
     showErrordialog(context, "Invalid Cerdntials try again");

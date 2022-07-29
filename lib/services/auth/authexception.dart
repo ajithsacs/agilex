@@ -1,4 +1,4 @@
-class EmailnotFound implements Exception {}
+class EmailnotFoundException implements Exception {}
 
 class InvalidPassword implements Exception {}
 

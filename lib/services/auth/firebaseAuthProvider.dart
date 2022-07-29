@@ -61,7 +61,7 @@ class FirebaseAuthProvider implements AuthProvider {
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == usernotfound) {
-        throw EmailnotFound();
+        throw EmailnotFoundException();
       } else if (e.code == wrongpassword) {
         throw WeekpasswordAuthException();
       } else if (e.code == networkerror) {
