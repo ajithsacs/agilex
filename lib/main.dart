@@ -1,3 +1,4 @@
+import 'package:agilex/api/Apidesign.dart';
 import 'package:agilex/constants/routes.dart';
 import 'package:agilex/services/auth/auth_services.dart';
 import 'package:agilex/views/login_view.dart';
@@ -13,12 +14,13 @@ void main() async {
     theme: ThemeData(
       primarySwatch: Colors.blue,
     ),
-    home: const HomePage(),
+    home: const ApiDesign(),
     routes: {
       loginRoute: (context) => const Login(),
       registerRoute: (context) => const Register(),
       notesAppRoute: (context) => const NotesApp(),
       emailVerifyRout: (context) => const EmailVerify(),
+      apiroute: ((context) => const ApiDesign()),
     },
   ));
 }
@@ -46,6 +48,7 @@ class HomePage extends StatelessWidget {
               } else {
                 return const Login();
               }
+
             // if (user != null) {
             //   if (user.emailVerified) {
             //     print("Email verified");
